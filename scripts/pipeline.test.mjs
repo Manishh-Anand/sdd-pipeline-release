@@ -8,6 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { check } from '../.agent/scripts/check-pipeline.mjs';
 import { install } from './install.mjs';
+import { build, stale } from './build-plugin.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const COPY = ['AGENTS.md', 'CLAUDE.md', '.cursor', '.claude', '.agent', 'docs'];
@@ -108,4 +109,38 @@ test('--update replaces untouched files, keeps local edits, removes dropped file
   assert.ok(!r.conflicts.includes('.agent/memory/conventions.md'));
   // the edited file keeps its old baseline, so it stays a conflict on the next update too
   assert.ok(install(t, { update: true }).conflicts.includes('.cursor/rules/vite.mdc'));
+});
+
+test('--ut support is wired: skill, agent, command and router flag', () => {
+  for (const f of ['.cursor/skills/unit-testing/SKILL.md', '.claude/agents/test-writer.md', '.cursor/commands/unit-tests.md'])
+    assert.ok(fs.existsSync(path.join(ROOT, f)), f);
+  assert.match(fs.readFileSync(path.join(ROOT, 'AGENTS.md'), 'utf8'), /`--ut`/);
+  const d = fixture();
+  fs.rmSync(path.join(d, '.cursor/skills/unit-testing'), { recursive: true });
+  expectError(d, /unit-testing: required skill missing/);
+});
+
+test('installer ships the commands folder', () => {
+  const t = fs.mkdtempSync(path.join(os.tmpdir(), 'target-'));
+  assert.ok(install(t).copied.includes('.cursor/commands/unit-tests.md'));
+});
+
+test('plugin/ is in sync with the sources and the manifests are valid', () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'plugin-'));
+  build(tmp);
+  assert.ok(!stale(path.join(ROOT, 'plugin'), tmp), 'plugin/ is stale: run node scripts/build-plugin.mjs');
+  const manifest = JSON.parse(fs.readFileSync(path.join(tmp, '.cursor-plugin/plugin.json'), 'utf8'));
+  const market = JSON.parse(fs.readFileSync(path.join(ROOT, '.cursor-plugin/marketplace.json'), 'utf8'));
+  const kebab = /^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/;
+  assert.match(manifest.name, kebab);
+  assert.equal(manifest.version, fs.readFileSync(path.join(ROOT, 'VERSION'), 'utf8').trim());
+  assert.match(market.name, kebab);
+  assert.ok(market.owner.name);
+  for (const p of market.plugins) {
+    assert.match(p.name, kebab);
+    assert.equal(p.name, manifest.name);
+    assert.ok(fs.existsSync(path.join(ROOT, p.source, '.cursor-plugin/plugin.json')), `source ${p.source}`);
+  }
+  assert.match(fs.readFileSync(path.join(tmp, 'rules/pipeline-router.mdc'), 'utf8'), /^---\r?\ndescription: .*\r?\nalwaysApply: true\r?\n---\r?\n# Engineering Agent Pipeline/);
+  for (const f of ['skills/pipeline-init/templates/PLAN.md', 'skills/pipeline-init/memory/INDEX.md', 'agents/test-writer.md']) assert.ok(fs.existsSync(path.join(tmp, f)), f);
 });

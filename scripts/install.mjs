@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 const SRC = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 // Pipeline-owned paths, tracked in the lock and updated by --update.
 const PATHS = [
-  'AGENTS.md', 'CLAUDE.md', '.cursor/rules', '.cursor/skills', '.cursor/mcp.json', '.mcp.json',
+  'AGENTS.md', 'CLAUDE.md', '.cursor/rules', '.cursor/skills', '.cursor/commands', '.cursor/mcp.json', '.mcp.json',
   '.claude/agents', '.agent/templates', '.agent/work/.gitkeep',
   'docs/EXTERNAL_SKILLS.md', 'docs/licenses', '.agent/scripts/check-pipeline.mjs',
 ];

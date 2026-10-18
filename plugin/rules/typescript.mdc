@@ -1,0 +1,17 @@
+---
+description: TypeScript standards
+globs: "**/*.ts,**/*.tsx"
+alwaysApply: false
+---
+# TypeScript
+- **Strictness**: respect `strict` in tsconfig. No `any`; use `unknown` and narrow it.
+  No `@ts-ignore`; `@ts-expect-error` needs a reason.
+- **Types**: `type` for unions and compositions, `interface` for extendable object shapes,
+  following the project's convention.
+- **API types**: match the backend contract. Keep one source of truth (generated or the shared
+  types file), never ad-hoc copies.
+- **Async state**: model it as a discriminated union (`status: 'loading' | 'error' | 'ok'`).
+- **Nullability**: handle `undefined`/`null` explicitly. Prefer `?.` and `??`, and avoid `!`.
+- **Imports**: use type-only imports (`import type`) where the config requires them, and the
+  project's path aliases.
+- **Enums**: prefer string-literal unions unless the project already uses enums.

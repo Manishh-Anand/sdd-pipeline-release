@@ -1,5 +1,31 @@
 # Distributing the pipeline to the team
 
+Two channels. **Use the plugin** if your Cursor plan supports it; keep the Git installer
+(§1 onward) as the fallback and for Claude Code users.
+
+## 0. Cursor plugin (recommended)
+`plugin/` is generated from the repo's sources by `node scripts/build-plugin.mjs` (CI fails if
+it is stale). It ships the rules, skills, subagents, commands, MCP config and the router (as the
+always-on rule `pipeline-router`). `.cursor-plugin/marketplace.json` makes the repo a marketplace.
+
+**Publish (owners):**
+1. Change sources, bump `VERSION`, run `node scripts/build-plugin.mjs`, open a PR (CI must pass),
+   merge, tag `vX.Y.Z`.
+2. *Team/private:* in the Cursor dashboard (Settings, Plugins), add this GitHub repo as a team
+   marketplace and mark the plugin required or optional. Needs a plan with team marketplaces.
+3. *Public:* submit the repo at cursor.com/marketplace/publish (Cursor reviews it).
+4. *Local test before either:* copy `plugin/` to `~/.cursor/plugins/local/engineering-pipeline`
+   and reload the window.
+
+**Install (developers):** open Cursor's plugin marketplace, install `engineering-pipeline`, then
+run `/pipeline-init` once in each project. That creates `.agent/memory`, `.agent/templates` and
+`.agent/work`, which stay project-owned and are never updated by the plugin. Updates arrive with
+the plugin version; no per-repo PR.
+
+**Caveat:** `/pipeline-init` memory entries are per repo; fill `conventions.md` and `gotchas.md`.
+
+## Git installer (fallback)
+
 The model: **one template repo, owned by the platform/lead team, installed into each project
 repo through a PR.** Developers install nothing. Cursor picks the pipeline up from the project
 repo when they open it.

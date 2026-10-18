@@ -15,8 +15,9 @@ Open the repo in Cursor (2.4 or later, vision-capable model), then **Cursor Sett
 | Capability | Expected |
 |---|---|
 | Rules | 14 `.mdc` rules. `engineering-core`, `security` and `ponytail` always apply; the other 11 attach by glob. |
-| Skills | 9 internal skills + 6 vendored ([register](EXTERNAL_SKILLS.md)) |
-| Subagents | `validator`, `code-reviewer`, `security-auditor` |
+| Skills | 10 internal skills + 6 vendored ([register](EXTERNAL_SKILLS.md)) |
+| Subagents | `validator`, `code-reviewer`, `security-auditor`, `test-writer` |
+| Commands | `/unit-tests` |
 | MCP | `context7`, `playwright` |
 
 If something is missing, run **Developer: Reload Window**.
@@ -32,6 +33,7 @@ Run these against the sample apps in
 | B | Plan → Agent | "Add an endpoint to retrieve application risk information." | aspnet-core / ef-core rules load; reuses `ApplicationService` and the DTO pattern |
 | C | Plan | "Add a column to store application criticality." | High risk; impact analysis (migration, backfill); explicit approval |
 | D | Debug | "The application filter is not updating the table." | Skips intake; root cause in `Dashboard.tsx` (planted bug); regression test; review gate |
+| F | Agent | "Add a `formatRisk()` helper. --ut" | `test-writer` runs before the review gate; only test files change; tests pass; `UNIT_TESTS.md` written |
 | E | Ask | "How does authentication work in this application?" | Read-only; explains `ApiKeyAuthenticationHandler` with `file:line`; `git status` clean |
 
 Record the date, Cursor version and result of each run in the PR that ships the release.

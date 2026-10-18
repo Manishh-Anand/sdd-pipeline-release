@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 export const INTERNAL_SKILLS = [
   'requirements-intake', 'codebase-audit', 'architecture-review', 'tasks',
-  'validation', 'code-review', 'convergence', 'documentation', 'project-memory',
+  'validation', 'code-review', 'convergence', 'documentation', 'project-memory', 'unit-testing',
 ];
 export const RULES = [
   'engineering-core', 'security', 'csharp-dotnet', 'aspnet-core', 'ef-core',
@@ -17,7 +17,7 @@ const ALWAYS_ON = new Set(['engineering-core', 'security', 'ponytail']);
 const SKILL_SECTIONS = ['Purpose', 'Trigger', 'Inputs', 'Process', 'Output', 'Guardrails', 'Stop conditions'];
 const CAPS = { agents: 150, rule: 80, core: 60, internalSkill: 150, vendoredSkill: 350, memoryIndex: 100 };
 const REQUIRED_FILES = [
-  'AGENTS.md', 'CLAUDE.md', ...['validator', 'code-reviewer', 'security-auditor'].map((a) => `.claude/agents/${a}.md`),
+  'AGENTS.md', 'CLAUDE.md', '.cursor/commands/unit-tests.md', ...['validator', 'code-reviewer', 'security-auditor', 'test-writer'].map((a) => `.claude/agents/${a}.md`),
   '.agent/memory/INDEX.md', 'docs/EXTERNAL_SKILLS.md', '.agent/scripts/check-pipeline.mjs',
   ...['INTAKE', 'REQUIREMENTS', 'CODEBASE_CONTEXT', 'PLAN', 'TASKS', 'VALIDATION', 'REVIEW', 'CONVERGENCE', 'FEATURE_DOC', 'ADR'].map((t) => `.agent/templates/${t}.md`),
 ];

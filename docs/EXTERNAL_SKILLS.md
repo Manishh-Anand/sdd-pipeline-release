@@ -1,6 +1,6 @@
 # External skills register
 
-The internal pipeline (`AGENTS.md`, `.cursor/rules`, the nine internal skills) is authoritative.
+The internal pipeline (`AGENTS.md`, `.cursor/rules`, the ten internal skills) is authoritative.
 An external skill is admitted only if it adds measurable value, doesn't duplicate an internal
 skill, and doesn't conflict with the rules.
 

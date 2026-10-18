@@ -1,0 +1,17 @@
+---
+description: Vite project standards
+globs: "**/vite.config.*,**/vitest.config.*,**/.env*,**/index.html"
+alwaysApply: false
+---
+# Vite
+- **Env**:
+  - only `VITE_`-prefixed variables reach the client, so never put secrets in them.
+  - Read them through `import.meta.env`, typed in `vite-env.d.ts`.
+  - Commit `.env.example`, never `.env.local`.
+- **API**: in dev, proxy backend calls with `server.proxy` instead of hard-coding hosts. Read the
+  base URL from env.
+- **Config**: change `vite.config` only when the plan names it. Aliases must match `tsconfig` `paths`.
+- **Dependencies**:
+  - add one only after checking existing ones, and pin it through the lockfile.
+  - Choose `dependencies` vs `devDependencies` correctly.
+- **Build**: `vite build` and the project's type check must both pass.

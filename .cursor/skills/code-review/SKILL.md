@@ -16,7 +16,7 @@ demand against any diff or branch.
 - The diff (`git diff <base>`) plus the code connected to it: callers, callees and tests of each
   changed symbol.
 - `PLAN.md` (the Reuse/Modify/Create/Avoid table) and `REQUIREMENTS.md`.
-- The `.cursor/rules/*.mdc` whose globs match each changed file.
+- The rules whose globs match each changed file.
 
 ## Process
 1. Read each changed file in full, not just its hunks. Open the callers of every changed

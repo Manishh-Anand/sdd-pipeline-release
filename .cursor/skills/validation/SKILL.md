@@ -9,8 +9,7 @@ Prove that the change works with evidence. The implementer's opinion doesn't cou
 belongs to `code-review`, and security to `security-auditor`.
 
 ## Trigger
-After implementation, in both lanes. Run it as the `validator` subagent
-(`.claude/agents/validator.md`), so it gets a fresh context.
+After implementation, in both lanes. Run it as the `validator` subagent, so it gets a fresh context.
 
 ## Inputs
 - `REQUIREMENTS.md` and `PLAN.md` (the quick lane may have neither; use the request instead).

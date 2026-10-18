@@ -1,0 +1,17 @@
+{
+  "name": "engineering-pipeline",
+  "description": "Intent to requirements to plan to approval to build to independent validation, with unit-test generation (--ut).",
+  "version": "2.4.0",
+  "author": {
+    "name": "Manishh-Anand"
+  },
+  "homepage": "https://github.com/Manishh-Anand/sdd-pipeline-release",
+  "repository": "https://github.com/Manishh-Anand/sdd-pipeline-release",
+  "keywords": [
+    "sdd",
+    "workflow",
+    "review",
+    "unit-tests",
+    "planning"
+  ]
+}

@@ -9,8 +9,10 @@ intent → requirements → audit → plan → **approval** → build → **inde
 |---|---|
 | `AGENTS.md` | Router: intent → Cursor mode → skills, risk lanes, gates |
 | `.cursor/rules/` | Coding standards (3 always on, 11 attached by file type) |
-| `.cursor/skills/` | 9 pipeline skills + 6 vetted external skills ([register](docs/EXTERNAL_SKILLS.md)) |
-| `.claude/agents/` | Review gate subagents: `validator`, `code-reviewer`, `security-auditor` (run in parallel) |
+| `.cursor/skills/` | 10 pipeline skills + 6 vetted external skills ([register](docs/EXTERNAL_SKILLS.md)) |
+| `.claude/agents/` | Review gate subagents: `validator`, `code-reviewer`, `security-auditor` (run in parallel), `test-writer` (on `--ut`) |
+| `.cursor/commands/` | `/unit-tests` |
+| `plugin/` | Generated Cursor plugin; `.cursor-plugin/marketplace.json` makes this repo installable from a marketplace ([docs/DISTRIBUTION.md](docs/DISTRIBUTION.md)) |
 | `.agent/memory/` | Team memory (decisions, conventions, gotchas), reviewed in PRs |
 | `.agent/templates/` | Skeletons for the REQUIREMENTS / CODEBASE_CONTEXT / PLAN / VALIDATION artifacts |
 | `docs/` | Rollout guide, skill register, testing guide, PRD (historical; `AGENTS.md` is current) |
@@ -18,7 +20,9 @@ intent → requirements → audit → plan → **approval** → build → **inde
 ## Use
 - **Try it in Cursor:** [docs/TESTING.md](docs/TESTING.md)
 - **Roll out to the team:** [docs/DISTRIBUTION.md](docs/DISTRIBUTION.md)
-- **Install / update a project:** `node scripts/install.mjs <repo> [--update] [--dry-run]`. It never overwrites
+- **Unit tests:** add `--ut` to a prompt, or run `/unit-tests [paths]`.
+- **Build the plugin after editing sources:** `node scripts/build-plugin.mjs`
+- **Install / update a project (Git method):** `node scripts/install.mjs <repo> [--update] [--dry-run]`. It never overwrites
   existing files.
 - **Check after editing the pipeline:** `node .agent/scripts/check-pipeline.mjs && node --test scripts/pipeline.test.mjs`
 

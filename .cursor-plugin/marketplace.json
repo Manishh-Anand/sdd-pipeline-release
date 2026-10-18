@@ -1,0 +1,12 @@
+{
+  "name": "sdd-pipeline",
+  "owner": { "name": "Manishh-Anand" },
+  "metadata": { "description": "Engineering Agent Pipeline for Cursor" },
+  "plugins": [
+    {
+      "name": "engineering-pipeline",
+      "source": "plugin",
+      "description": "Intent to requirements to plan to approval to build to independent validation, with unit-test generation (--ut)."
+    }
+  ]
+}

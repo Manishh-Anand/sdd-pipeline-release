@@ -7,5 +7,5 @@ Cursor discovers the files below natively. Claude Code does not, so it loads the
 - **Rules**: before editing a file, read `.cursor/rules/engineering-core.mdc` and
   `security.mdc`. Then read every other `.cursor/rules/*.mdc` whose `globs` match that file, and
   only those.
-- **Subagents**: `.claude/agents/` (`validator`, `code-reviewer`, `security-auditor`) is native to
+- **Subagents**: `.claude/agents/` (`validator`, `code-reviewer`, `security-auditor`, `test-writer`) is native to
   both tools. Use all three for the review gate.

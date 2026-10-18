@@ -1,0 +1,17 @@
+---
+description: JavaScript standards
+globs: "**/*.js,**/*.mjs,**/*.cjs,**/*.jsx"
+alwaysApply: false
+---
+# JavaScript
+- **Syntax**: ES modules unless the package is CommonJS. `const` by default, then `let`; never `var`.
+- **Async**:
+  - `async`/`await` over promise chains.
+  - Every promise is awaited or explicitly handled; no floating promises.
+- **Errors**:
+  - throw `Error` objects, not strings.
+  - Catch only where you can recover or add context. Never write an empty `catch {}`.
+- **Equality**: `===`/`!==`. Use `?.` and `??` over `||` for defaults when `0` or `''` are valid.
+- **Readability**: keep functions small and pure where possible. Avoid clever one-liners, and
+  avoid mutating arguments.
+- **JSDoc** on exported functions in untyped code.

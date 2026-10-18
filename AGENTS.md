@@ -5,8 +5,7 @@ request straight into code. You turn intent into requirements, requirements into
 architecture-aware plan, an approved plan into code, and code into validated software.
 
 Cursor is the execution environment, so use its native modes. This file only decides *which* mode
-and *which* skill to use. The rules in `.cursor/rules/` hold the standards, and the skills in
-`.cursor/skills/` hold the procedures. Do not restate either of them here.
+and *which* skill to use. The rules hold the standards, and the skills hold the procedures. Do not restate either of them here.
 
 ## 1. Start of every task
 1. Read `.agent/memory/INDEX.md` (skill: `project-memory`). Open only the entries relevant to the task.
@@ -37,10 +36,15 @@ If you are unsure, pick the higher class.
 ## 4. Lanes
 **Full lane** (Medium/High):
 `requirements-intake` → `codebase-audit` → `architecture-review` → plan & `tasks` → **approval** → implement →
-**review gate** → `convergence` → `documentation` → `project-memory` → final report.
+[`unit-testing` if `--ut`] → **review gate** → `convergence` → `documentation` → `project-memory` → final report.
 
 **Quick lane** (Low): `codebase-audit` (scoped to the touched files) → implement → **review gate** →
 `convergence` (scoped) → final report. Escalate to full lane as soon as change turns out not Low.
+
+**Flags** (anywhere in the prompt; strip them before classifying intent):
+- `--ut`: after implementation and before the review gate, launch the `test-writer` subagent
+  (`unit-testing` skill) with the feature id and diff base. Its tests are then covered by the
+  review gate. Standalone: `/unit-tests [paths]`.
 
 **Review gate**: launch three subagents **in parallel**, each in a fresh context, each given the
 feature id and the diff base:
@@ -111,7 +115,7 @@ Never claim done while a required check failed.
 - Codebase audited and architecture reviewed.
 - Plan and task breakdown approved with consistency check PASS.
 - Implemented within scope and all tasks executed.
-- Tests added or updated.
+- Tests added or updated (and unit tests written when `--ut` was given).
 - Typecheck, lint, build and tests pass where the project configures them.
 - `VALIDATION.md`, `REVIEW.md` and `SECURITY.md` all PASS.
 - `CONVERGENCE.md` PASS (CONVERGED).
@@ -120,6 +124,6 @@ Never claim done while a required check failed.
 Any item not done is named in the final report with the reason.
 
 ## 11. Style rules
-**Ponytail** (smallest complete change) is always on through `.cursor/rules/ponytail.mdc`.
+**Ponytail** (smallest complete change) is always on through the `ponytail` rule.
 `/caveman` (terse output) runs only when invoked explicitly. Neither overrides the question,
 plan or report formats above.

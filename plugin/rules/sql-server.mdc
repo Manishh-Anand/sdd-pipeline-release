@@ -1,0 +1,31 @@
+---
+description: SQL Server / T-SQL standards
+globs: "**/*.sql"
+alwaysApply: false
+---
+# SQL Server
+- **Any schema change** (table, column, index, constraint, view, proc signature) requires an
+  impact analysis in the plan:
+  - what reads and writes it;
+  - backfill;
+  - locking and size;
+  - rollback.
+  It is High risk.
+- **Naming**: follow the existing convention. Default to PascalCase singular tables in an
+  explicit schema (`dbo.Application`), `PK_`/`FK_`/`IX_`/`CK_`/`DF_` prefixes, and procs as
+  `usp_<Verb><Noun>`.
+- **Keys**: every table has a primary key. Foreign keys are declared and indexed.
+- **Columns**:
+  - explicit types and lengths, with nullability stated.
+  - A new NOT NULL column on an existing table needs a default or a backfill.
+- **Queries**:
+  - explicit column lists (no `SELECT *` in app or proc code).
+  - SARGable predicates.
+  - Deterministic `ORDER BY` with `OFFSET/FETCH` for paging.
+- **NULLs**: use `IS NULL`/`IS NOT NULL`, never `= NULL`. Beware `NOT IN` when a NULL is present.
+- **Safety**:
+  - parameterised only.
+  - `SET NOCOUNT ON` in procs.
+  - `SET XACT_ABORT ON` + a transaction inside `TRY...CATCH` for multi-statement writes.
+- **Migrations**: scripts are idempotent (guard with `IF NOT EXISTS` / `COL_LENGTH`) and use the
+  project's migration tool. Never edit an already-applied migration.

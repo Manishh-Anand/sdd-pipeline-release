@@ -1,0 +1,30 @@
+---
+description: React component standards
+globs: "**/*.tsx,**/*.jsx"
+alwaysApply: false
+---
+# React
+- **Reuse first**: search `components/`, `shared/`, `ui/` and the design system before creating
+  a component. Extend through props or composition rather than copying.
+- **Components**:
+  - function components, one per file, named the same as the file.
+  - Keep them presentational where possible, and move data fetching into hooks.
+- **Props**: typed, minimal and explicit. Avoid boolean-prop sprawl; use composition or
+  variants (see `vercel-composition-patterns`).
+- **State**:
+  - local first, then lift only as far as needed, then the project's existing store or query
+    library.
+  - Never copy server state into local state.
+  - Derive values instead of syncing them with effects.
+- **Effects**: only for synchronising with external systems. Every effect has a correct
+  dependency list, and a cleanup when it subscribes.
+- **Data**:
+  - go through the project's existing API client or hooks.
+  - Every async view handles loading, empty, error and success states.
+- **Accessibility**:
+  - semantic elements; labelled inputs; keyboard reachable.
+  - Visible focus; alt text; no click handlers on non-interactive elements.
+- **Lists**: stable `key`s from data ids, never array indexes for dynamic lists.
+- **Performance**: measure before you memoize.
+- **Tests**: React Testing Library, querying by role or label. Test behaviour, not implementation.
+- For UI review, use `web-design-guidelines`.

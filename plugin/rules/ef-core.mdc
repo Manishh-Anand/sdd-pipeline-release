@@ -1,0 +1,24 @@
+---
+description: Entity Framework Core data-access standards
+globs: "**/*DbContext*.cs,**/Migrations/**/*.cs,**/Data/**/*.cs,**/Repositories/**/*.cs,**/Entities/**/*.cs"
+alwaysApply: false
+---
+# EF Core
+- **DbContext**: scoped per request and never shared across threads. Use the existing context;
+  do not add a new one for one feature.
+- **Reads**:
+  - use `AsNoTracking()` for read-only queries.
+  - Project with `Select` into DTOs instead of loading whole graphs.
+- **N+1**: avoid lazy loading in loops. Use `Include`/projection, and `AsSplitQuery()` when a
+  cartesian explosion is likely.
+- **Async**: use `ToListAsync`/`FirstOrDefaultAsync`, etc., with a `CancellationToken`.
+- **Filtering**: filter and page on the server (`Where`, `OrderBy`, `Skip`/`Take`). Never call
+  `ToList()` before filtering.
+- **Raw SQL**: `FromSql` with interpolated parameters only. Never `FromSqlRaw` with concatenation.
+- **Transactions**: one `SaveChangesAsync` is already atomic. Use an explicit transaction only to
+  span multiple saves, or EF and raw SQL together.
+- **Migrations**:
+  - one migration per logical change, with a descriptive name.
+  - Review the generated SQL (`dotnet ef migrations script`) before committing.
+  - Every migration is High risk. Note data impact, locking and rollback in the plan.
+- For deeper query tuning, use the `optimizing-ef-core-queries` skill.
