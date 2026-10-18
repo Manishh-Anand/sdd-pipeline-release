@@ -1,0 +1,34 @@
+---
+description: C# / .NET coding standards
+globs: "**/*.cs,**/*.csproj,**/Directory.Build.props"
+alwaysApply: false
+---
+# C# / .NET
+Follow the project's existing conventions first (`.editorconfig`, analyzers, folder layout).
+
+- **Naming**: PascalCase for types, members and constants; camelCase for locals and params;
+  `_camelCase` for private fields; `I` prefix on interfaces; `Async` suffix on async methods.
+- **Nullable**: respect `<Nullable>enable</Nullable>`. No `!` suppression without a comment
+  explaining why it is safe.
+- **Async**:
+  - async all the way. No `.Result`, `.Wait()` or `async void` (event handlers excepted).
+  - Accept and pass `CancellationToken` through I/O paths.
+  - `ConfigureAwait(false)` only in library projects that already use it.
+- **DI**:
+  - constructor injection, registered where the project registers services.
+  - Lifetimes: DbContext scoped. Never a singleton that captures a scoped service.
+- **Exceptions**:
+  - throw specific exceptions. Catch `Exception` only at a top-level boundary that logs and
+    maps it.
+  - Never use exceptions for control flow.
+- **Types**: use `record` for immutable DTOs and value objects, and keep entities as classes.
+  Never expose entities over the wire; map to DTOs.
+- **LINQ**: readable over clever. Watch for multiple enumeration and client-side evaluation.
+- **Validation**: use the existing mechanism (DataAnnotations or FluentValidation). Do not add a
+  second one.
+- **Logging**:
+  - `ILogger<T>` with message templates (`"Loaded {Count} apps"`), not interpolation.
+  - No secrets or PII.
+- **Config**: use the options pattern (`IOptions<T>`) bound from configuration. No hard-coded
+  environment values.
+- **Resources**: `using`/`await using` for every `IDisposable`/`IAsyncDisposable` you own.

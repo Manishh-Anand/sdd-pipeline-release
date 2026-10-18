@@ -1,0 +1,15 @@
+---
+description: Security baseline for every change
+alwaysApply: true
+---
+# Security
+- No credentials, keys, tokens or connection strings with passwords in source, tests, docs or
+  commits. Read them from environment or config providers.
+- Validate and normalise all untrusted input (HTTP, files, queues, env) at the trust boundary.
+- SQL is always parameterised. No string-built SQL, including in stored procedures (`sp_executesql` with params).
+- Every new endpoint or handler states its authorization. Missing auth is a defect, not a default.
+- Return minimal error detail to clients. Keep stack traces and PII server-side.
+- Never disable TLS checks, CSRF/CORS protections, auth, or security tests to make something pass.
+- Changes to authN/authZ, crypto or secrets handling are High risk (AGENTS.md §3).
+- Do not bypass Cursor/Claude permission or sandbox controls to finish a task.
+- For deeper review, use the `security-and-hardening` skill.

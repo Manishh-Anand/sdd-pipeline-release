@@ -1,0 +1,26 @@
+---
+description: ASP.NET Core API standards
+globs: "**/Controllers/**/*.cs,**/Endpoints/**/*.cs,**/Program.cs,**/*Endpoint*.cs,**/*Controller*.cs,**/Middleware/**/*.cs"
+alwaysApply: false
+---
+# ASP.NET Core
+- **Style**: match the project's style, controllers *or* minimal APIs. Do not mix them in one
+  feature.
+- **Routing**: lowercase, plural resource nouns (`/api/applications/{id}/risk`), using the
+  existing versioning scheme.
+- **HTTP semantics**:
+  - status codes: GET returns 200/404; POST returns 201 + Location; PUT/PATCH returns 200/204;
+    DELETE returns 204.
+  - 400 for validation failures, 401/403 for auth failures, 409 for conflicts.
+- **Errors**: use ProblemDetails (RFC 9457) through the project's existing error middleware.
+  Never leak stack traces.
+- **Validation**: validate request DTOs at the edge and return a 400 with field errors.
+- **Auth**: every endpoint has an explicit `[Authorize]`/`RequireAuthorization` policy or a
+  justified `[AllowAnonymous]`.
+- **Layering**: the endpoint is a thin adapter → application service → data access. No DbContext
+  in endpoints unless that is the project's established pattern.
+- **Contracts**:
+  - request and response DTOs are versioned with the API, and changes are additive.
+  - Removing or renaming a field is a breaking change, which is High risk.
+- **Async**: accept `CancellationToken` in handlers (it binds `HttpContext.RequestAborted`).
+- **Middleware order**: respect the existing pipeline order. Changing it is an architecture change.

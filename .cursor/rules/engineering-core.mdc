@@ -1,0 +1,43 @@
+---
+description: Core engineering standards for every change
+alwaysApply: true
+---
+# Engineering core
+
+## Precedence
+company requirements > team standards (these rules) > project architecture > existing patterns > feature request.
+If two of them conflict, name the conflict and ask. Never pick one silently.
+"Existing pattern wins" means you follow the repo's conventions even when a generic best
+practice differs.
+
+## Reuse before create
+- Before adding a component, service, hook, util, API, DTO, model or query, search for an
+  existing one by name and by behaviour.
+- Prefer extending an existing one over creating a parallel one.
+- Never add a dependency for something a few lines, the stdlib, or an installed package
+  already covers.
+
+## Scope
+- Change only what the approved plan names.
+- If you discover a material change to scope or architecture, stop and use the STOP menu
+  from AGENTS.md.
+- Do not reformat, rename or "tidy" unrelated code.
+
+## Code
+- Optimise for the next reader: clear names, small functions, one responsibility per unit.
+- No speculative abstraction. Do not add interfaces, factories, options or config without a
+  second real use.
+- Comments explain *why*, not *what*. Public contracts get doc comments in the language's
+  idiom.
+- Handle errors at the boundary where you can act on them. Never swallow an error, and never
+  return a fake success.
+- Log with the project's logger, at the right level, with context and without secrets.
+
+## Tests
+- New logic or a bug fix comes with a test that would have failed before the change.
+- Never delete, skip or weaken a test, a lint rule or a type check to get green. Fix the code
+  or raise the issue instead.
+
+## Honesty
+- Report failures as failures, and name any check you could not run.
+- Do not claim something works unless you ran it and saw it work.

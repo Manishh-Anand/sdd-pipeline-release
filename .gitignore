@@ -1,0 +1,10 @@
+# pipeline working artifacts (per-feature scratch; durable facts go to docs/ and .agent/memory/)
+.agent/work/*
+!.agent/work/.gitkeep
+node_modules/
+dist/
+bin/
+obj/
+*.db
+.vs/
+__pycache__/

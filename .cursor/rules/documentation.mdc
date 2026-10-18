@@ -1,0 +1,16 @@
+---
+description: Documentation standards for docs and READMEs
+globs: "**/*.md,docs/**"
+alwaysApply: false
+---
+# Documentation
+- **When**: document a change when behaviour, contracts, setup or architecture changed. No docs
+  written for the sake of file count.
+- **Where**:
+  - feature docs in `docs/features/<feature>.md`;
+  - decisions in `.agent/memory/decisions/`;
+  - API contracts next to the code (OpenAPI/XML docs).
+- **Content**: one source of truth per fact. Link to it instead of copying.
+- **Style**: lead with purpose, keep it short, use present tense, and write commands as copyable
+  code blocks.
+- **Accuracy**: verify every command, path and name you write against the repo.
