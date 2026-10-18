@@ -48,22 +48,28 @@ repo when they open it.
 
 ## Local bootstrap (no Cursor plugin/admin access)
 
-Use this when teammates cannot install the Cursor plugin and the team does not want pipeline
-runtime files committed to each project. This mode installs only Cursor-discoverable rules,
+After cloning their own project, teammates can run one command from the project root. It requires
+Node.js/npm and Git; no separate pipeline clone or plugin installation is needed.
+
+```powershell
+npx --yes --prefer-online --package=github:Manishh-Anand/sdd-pipeline-release#dist/sdd-pipeline sdd-pipeline-bootstrap .
+```
+
+Preview first by adding `--dry-run`. To refresh an existing installation later, run the same
+command with `--update`. The package is fetched into npm's cache; the installer copies only the
+allowlisted runtime files into the current project. Git does not run an installer automatically
+when a project is cloned, so this one command is the setup step after cloning.
+
+This mode is for teammates who cannot install the Cursor plugin and do not want pipeline runtime
+files committed to each project. It installs only Cursor-discoverable rules,
 skills, commands, compatible agent definitions, templates, and local memory.
 It copies `AGENTS.md` only when the target does not already have one, plus the Cursor router rule;
 an existing project `AGENTS.md` is preserved and reported as a conflict. It does not copy Claude
 configuration, MCP configuration, license docs, or plugin build files into the project.
 
-```powershell
-git clone --depth 1 https://github.com/Manishh-Anand/sdd-pipeline-release.git C:\tools\sdd-pipeline-release
-node C:\tools\sdd-pipeline-release\scripts\bootstrap.mjs C:\path\to\existing-project --dry-run
-node C:\tools\sdd-pipeline-release\scripts\bootstrap.mjs C:\path\to\existing-project
-```
-
-By default, `bootstrap.mjs` fetches the exact commit checked out in the tools clone; `--ref` can
-select a branch, tag, or commit. It prints the resolved commit before installing. The installer
-fetches into a temporary directory, then copies only the allowlisted runtime into the existing Git repo. The installed files are excluded in that clone's
+The package follows the latest `dist/sdd-pipeline` branch revision when npm checks online. Treat
+that branch as trusted executable code: restrict who can push to it and review changes before they
+land. The installer copies only the allowlisted runtime into the existing Git repo. The installed files are excluded in that clone's
 `.git/info/exclude`; shared `.gitignore` is not modified. A local manifest under `.git/` supports
 safe updates. `--update` replaces only unchanged installed files; edits and pre-existing files
 are reported as conflicts. Files removed from a newer upstream version are retained and reported;

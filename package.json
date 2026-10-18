@@ -1,0 +1,12 @@
+{
+  "name": "sdd-pipeline-bootstrap",
+  "version": "2.5.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "sdd-pipeline-bootstrap": "scripts/bootstrap-cli.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

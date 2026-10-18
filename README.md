@@ -24,7 +24,7 @@ intent → requirements → audit → plan → **approval** → build → **inde
 - **Build the plugin after editing sources:** `node scripts/build-plugin.mjs`
 - **Install / update a project (commit the pipeline):** `node scripts/install.mjs <repo> [--update] [--dry-run]`. It never overwrites
   existing files.
-- **Local bootstrap (no plugin/admin access):** clone this repo and run `node scripts/bootstrap.mjs <existing-repo> [--ref <branch-or-tag-or-commit>] [--update] [--dry-run]`. It copies only the Cursor runtime and uses that clone's `.git/info/exclude` so pipeline files are not staged by default.
+- **Local bootstrap (no plugin/admin access):** from an existing project root run `npx --yes --prefer-online --package=github:Manishh-Anand/sdd-pipeline-release#dist/sdd-pipeline sdd-pipeline-bootstrap .`. Add `--dry-run` to preview or `--update` to refresh. It copies only the Cursor runtime and uses the project's `.git/info/exclude` so pipeline files are not staged by default.
 - **Check after editing the pipeline:** `node .agent/scripts/check-pipeline.mjs && node --test scripts/pipeline.test.mjs`
 
 ## License

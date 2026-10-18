@@ -249,6 +249,17 @@ test('local install refuses to overlap an existing installer lock', () => {
   assert.equal(fs.readFileSync(lock, 'utf8'), '{"pid":1}\n');
 });
 
+test('one-command bootstrap CLI previews a local install', () => {
+  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+  assert.equal(pkg.version, fs.readFileSync(path.join(ROOT, 'VERSION'), 'utf8').trim());
+  assert.equal(pkg.bin['sdd-pipeline-bootstrap'], 'scripts/bootstrap-cli.mjs');
+  const t = fs.mkdtempSync(path.join(os.tmpdir(), 'target-local-'));
+  execFileSync('git', ['init', '--quiet', t]);
+  const out = execFileSync(process.execPath, [path.join(ROOT, 'scripts/bootstrap-cli.mjs'), t, '--dry-run'], { encoding: 'utf8' });
+  assert.match(out, /\[dry run\] would copy \d+, update 0/);
+  assert.equal(fs.existsSync(path.join(t, '.cursor')), false);
+});
+
 test('update rejects unsafe paths in a corrupted install manifest', () => {
   const t = fs.mkdtempSync(path.join(os.tmpdir(), 'target-lock-'));
   fs.mkdirSync(path.join(t, '.agent'), { recursive: true });
