@@ -1,6 +1,8 @@
 # pipeline working artifacts (per-feature scratch; durable facts go to docs/ and .agent/memory/)
 .agent/work/*
 !.agent/work/.gitkeep
+.sdd/work/*
+!.sdd/work/.gitkeep
 node_modules/
 dist/
 bin/

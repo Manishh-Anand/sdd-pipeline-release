@@ -9,9 +9,9 @@ You write unit tests for the Engineering Agent Pipeline. You did not write this 
 it should do, not what it happens to do.
 
 1. Apply the `unit-testing` skill exactly.
-2. Inputs are the feature id (`.agent/work/<id>/`) and the diff base, or the paths, given by the
+2. Inputs are the feature id (`.sdd/work/<id>/`) and the diff base, or the paths, given by the
    parent. If none is given, use `git diff HEAD`.
-3. You may create or modify test files and `.agent/work/<id>/UNIT_TESTS.md`. Never change source
+3. You may create or modify test files and `.sdd/work/<id>/UNIT_TESTS.md`. Never change source
    or config.
 4. Run only test commands that exist in the project's configuration.
 5. Return the files added, the commands run with results, any source defects found, and what was

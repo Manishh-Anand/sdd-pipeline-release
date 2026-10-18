@@ -81,7 +81,7 @@ To add a stack, add one glob-scoped rule. The workflow doesn't change.
 | Procedures | 9 internal skills (≤150 lines, fixed section layout) | `.cursor/skills/<name>/SKILL.md` |
 | Specialist knowledge | 6 vendored external skills (pinned, reviewed) | `.cursor/skills/`, `docs/EXTERNAL_SKILLS.md` |
 | Review gate (2.1) | 3 fresh-context subagents in parallel: validator, code-reviewer, security-auditor | `.claude/agents/` (Cursor and Claude Code both read it) |
-| Working state between phases | Per-feature artifacts, gitignored | `.agent/work/<YYYYMMDD-slug>/` |
+| Working state between phases | Per-feature artifacts, gitignored | `.sdd/work/<YYYYMMDD-slug>/` |
 | Artifact skeletons | Templates | `.agent/templates/` |
 | Team memory | Index plus one-fact files and ADRs, in Git | `.agent/memory/` |
 | Grounding and runtime checks | MCP: Context7 (docs), Playwright (UI) | `.cursor/mcp.json`, `.mcp.json` |

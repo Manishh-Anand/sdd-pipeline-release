@@ -55,7 +55,7 @@ feature id and the diff base:
 If any fails, show the "Validation failed" menu (§8), fix issues, then re-run failed reviewers.
 When review gate passes, run `convergence` to verify implementation against requirements and tasks.
 
-Working artifacts go in `.agent/work/<YYYYMMDD-slug>/`, using the skeletons in `.agent/templates/`.
+Working artifacts go in `.sdd/work/<YYYYMMDD-slug>/`, using the skeletons in `.agent/templates/`.
 They hold summaries, never source dumps. In Cursor **Plan mode**, if you can't write files, put
 REQUIREMENTS and CODEBASE_CONTEXT as the first sections of the plan. The **first build step** then
 saves them, together with `PLAN.md`, `TASKS.md` and any referenced screenshots (`refs/`), into the

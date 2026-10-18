@@ -20,12 +20,12 @@ always-on rule `pipeline-router`). `.cursor-plugin/marketplace.json` makes the r
 
 **Install (developers):** open Customize in the Cursor sidebar, install `engineering-pipeline` from the team marketplace (automatic if set to Default On or Required), then
 run `/pipeline-init` once in each project. That creates `.agent/memory`, `.agent/templates` and
-`.agent/work`, which stay project-owned and are never updated by the plugin. Updates arrive with
+`.sdd/work`, which stay project-owned and are never updated by the plugin. Updates arrive with
 the plugin version; no per-repo PR.
 
 **Caveat:** `/pipeline-init` memory entries are per repo; fill `conventions.md` and `gotchas.md`.
 
-## Git installer (fallback)
+## Git installer (commit the pipeline)
 
 The model: **one template repo, owned by the platform/lead team, installed into each project
 repo through a PR.** Developers install nothing. Cursor picks the pipeline up from the project
@@ -45,6 +45,38 @@ repo when they open it.
 3. Add CI that runs on every PR (§5).
 4. Tag releases: `git tag vX.Y.Z`. The `VERSION` file holds the current number, and every
    install records it in the target's `.agent/pipeline-lock.json`.
+
+## Local bootstrap (no Cursor plugin/admin access)
+
+Use this when teammates cannot install the Cursor plugin and the team does not want pipeline
+runtime files committed to each project. This mode installs only Cursor-discoverable rules,
+skills, commands, compatible agent definitions, templates, and local memory.
+It copies `AGENTS.md` only when the target does not already have one, plus the Cursor router rule;
+an existing project `AGENTS.md` is preserved and reported as a conflict. It does not copy Claude
+configuration, MCP configuration, license docs, or plugin build files into the project.
+
+```powershell
+git clone --depth 1 https://github.com/Manishh-Anand/sdd-pipeline-release.git C:\tools\sdd-pipeline-release
+node C:\tools\sdd-pipeline-release\scripts\bootstrap.mjs C:\path\to\existing-project --dry-run
+node C:\tools\sdd-pipeline-release\scripts\bootstrap.mjs C:\path\to\existing-project
+```
+
+By default, `bootstrap.mjs` fetches the exact commit checked out in the tools clone; `--ref` can
+select a branch, tag, or commit. It prints the resolved commit before installing. The installer
+fetches into a temporary directory, then copies only the allowlisted runtime into the existing Git repo. The installed files are excluded in that clone's
+`.git/info/exclude`; shared `.gitignore` is not modified. A local manifest under `.git/` supports
+safe updates. `--update` replaces only unchanged installed files; edits and pre-existing files
+are reported as conflicts. Files removed from a newer upstream version are retained and reported;
+delete them yourself, then run `--update` to remove their local exclusion. Git exclusions
+prevent normal staging but can be bypassed with `git add -f`. An exclusive lock prevents
+overlapping installer runs; if an interrupted run leaves `.git/sdd-pipeline-install.lock`, verify
+no installer is active before deleting the stale lock and retrying. A separate process that
+deliberately changes the same paths during installation is outside this local developer workflow's
+threat model.
+
+Per-feature pipeline artifacts live in ignored `.sdd/work/<feature-id>/`. Durable feature docs
+go in `docs/features/`; generated unit tests use the project's existing test locations and are
+ordinary project changes.
 
 ## 2. Roll out to a project (per repo)
 ```powershell
@@ -129,7 +161,7 @@ Cursor's current team and plugin features when you get there; this guide doesn't
 
 ## 7. Feedback loop
 - **Developers** report problems as issues on `sdd-pipeline-release`, with the chat transcript or
-  the `.agent/work/<id>/` files attached.
+  the `.sdd/work/<id>/` files attached.
 - **Owners** review them monthly: tighten a skill, adjust a rule glob, or add a gotcha to memory.
   They ship the fix as a release.
 - **Quality signal:** the share of PRs whose final report shows all three review gates passing.

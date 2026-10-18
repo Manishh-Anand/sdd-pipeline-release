@@ -1,6 +1,6 @@
 ---
 name: pipeline-init
-description: Set up the project-owned half of the Engineering Agent Pipeline in the current repo - .agent/memory, .agent/templates, .agent/work and .gitignore entries. Run once per project after installing the plugin, via /pipeline-init.
+description: Set up the project-owned half of the Engineering Agent Pipeline in the current repo - .agent/memory, .agent/templates, .sdd/work and .gitignore entries. Run once per project after installing the plugin, via /pipeline-init.
 disable-model-invocation: true
 ---
 # Pipeline init
@@ -11,12 +11,14 @@ the files that belong to the project.
 1. Copy `memory/` (next to this file) to `.agent/memory/` in the repo root. Skip any file that
    already exists; never overwrite.
 2. Copy `templates/` (next to this file) to `.agent/templates/`, same no-overwrite rule.
-3. Create `.agent/work/.gitkeep` if missing.
+3. Create `.sdd/work/.gitkeep` if missing.
 4. Append these lines to `.gitignore` if they are not already present:
    ```
    # Engineering Agent Pipeline working artifacts
    .agent/work/*
    !.agent/work/.gitkeep
+   .sdd/work/*
+   !.sdd/work/.gitkeep
    ```
 5. Report what was created and what was skipped. Tell the developer to add 3-10 conventions to
    `.agent/memory/conventions.md` and known traps to `gotchas.md`, then commit the result.

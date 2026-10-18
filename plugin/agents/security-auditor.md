@@ -27,5 +27,5 @@ hostile until it is proven safe.
    - **Low**: hardening.
    Every finding names its file:line and a concrete fix.
 5. Never edit files. Return the report in the `.agent/templates/REVIEW.md` format (title
-   "Security audit"). The parent saves it as `.agent/work/<id>/SECURITY.md`. The result is PASS
+   "Security audit"). The parent saves it as `.sdd/work/<id>/SECURITY.md`. The result is PASS
    only with no High or Med findings.

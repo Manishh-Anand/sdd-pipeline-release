@@ -48,7 +48,7 @@ approval gate.
 3. If any inconsistency, missing test, or unmapped requirement is discovered, update the plan and
    tasks before presenting to the developer.
 4. Format the output using `.agent/templates/TASKS.md` and append or write to
-   `.agent/work/<id>/TASKS.md`. In Cursor Plan mode, include the task list directly in the plan.
+   `.sdd/work/<id>/TASKS.md`. In Cursor Plan mode, include the task list directly in the plan.
 5. Conclude the planning phase with the Human Approval gate (AGENTS.md §6).
 
 ## Output

@@ -36,7 +36,7 @@ After implementation, in both lanes. Run it as the `validator` subagent, so it g
    - **Docs**: updated if behaviour or contracts changed.
    - **UI (optional)**: if Playwright MCP is available and a reference was transcribed, open the
      page and compare it against the `Reference` section of `REQUIREMENTS.md`.
-4. Write `.agent/work/<id>/VALIDATION.md` from the template. Each row is PASS / FAIL /
+4. Write `.sdd/work/<id>/VALIDATION.md` from the template. Each row is PASS / FAIL /
    NOT RUN (reason).
 5. Result:
    - **PASS** only if every required check passed.

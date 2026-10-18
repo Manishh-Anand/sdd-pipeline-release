@@ -43,7 +43,7 @@ Ground every plan and explanation in what the repository actually contains.
    endpoints and queries the task can use. Prefer Cursor's semantic search, then grep.
 6. **Tooling**: record the real commands for typecheck, lint, test and build (from package
    scripts, the .sln, pyproject or CI files). `validation` uses exactly these.
-7. For the full lane, write `.agent/work/<id>/CODEBASE_CONTEXT.md` from the template. In Ask mode,
+7. For the full lane, write `.sdd/work/<id>/CODEBASE_CONTEXT.md` from the template. In Ask mode,
    answer directly and don't write files.
 
 ## Output

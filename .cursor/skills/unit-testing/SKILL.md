@@ -42,7 +42,7 @@ Run it as the `test-writer` subagent (the `test-writer` agent) for a fresh conte
      with file:line and expected vs actual.
 7. **Mutation check** on risky logic: mentally or by a quick throwaway edit, confirm a test
    would fail if the branch were broken. Revert any throwaway edit.
-8. Write `.agent/work/<id>/UNIT_TESTS.md` when a feature folder exists: units covered, cases
+8. Write `.sdd/work/<id>/UNIT_TESTS.md` when a feature folder exists: units covered, cases
    per criterion, commands run with results, defects found, and units skipped with a reason.
 
 ## Repair mode (`/test-fix`)

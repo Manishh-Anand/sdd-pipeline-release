@@ -48,7 +48,7 @@ behaviour.
      Later chats and subagents cannot see chat images, so this transcription is the durable
      record.
    - **A file is `@`-mentioned or sits in the repo**: read it. During build, copy it to
-     `.agent/work/<id>/refs/` and link it from `REQUIREMENTS.md`.
+     `.sdd/work/<id>/refs/` and link it from `REQUIREMENTS.md`.
    - **Neither, and the feature has UI**: ask item 2 with these options:
      `1) I'll paste/drag it into this chat  2) I saved it — I'll @-mention the file  3) Match an existing page: ___  4) No visual reference`.
      If they choose 1 or 2 and the next message has no image or file, ask once more. Then

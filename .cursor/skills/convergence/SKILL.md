@@ -40,7 +40,7 @@ Full lane, immediately following the completion and passing of the review gate (
      - Material divergence: show the `Validation failed` / `STOP` menu from AGENTS.md §8.
    - When all requirements converge cleanly, record `PASS (CONVERGED)`.
 5. Format the audit using `.agent/templates/CONVERGENCE.md` and save as
-   `.agent/work/<id>/CONVERGENCE.md`.
+   `.sdd/work/<id>/CONVERGENCE.md`.
 
 ## Output
 `CONVERGENCE.md` documenting the requirement-to-code mapping, task execution log, drift analysis,

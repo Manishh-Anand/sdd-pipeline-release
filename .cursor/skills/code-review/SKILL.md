@@ -40,7 +40,7 @@ demand against any diff or branch.
    - **Med**: a maintainability, reuse or test gap.
    - **Low**: a nit.
 5. Return the report in the `.agent/templates/REVIEW.md` format. The parent saves it as
-   `.agent/work/<id>/REVIEW.md`.
+   `.sdd/work/<id>/REVIEW.md`.
 6. Result: **PASS** if there are no High or Med findings; otherwise FAIL.
 
 ## Output
