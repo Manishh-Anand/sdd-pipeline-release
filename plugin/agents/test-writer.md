@@ -1,6 +1,6 @@
 ---
 name: test-writer
-description: Unit test writer. Use after implementation when the prompt has the --ut flag, or when asked to write unit tests. Writes and runs tests in the project's existing framework; edits test files only, never source.
+description: Unit test writer. Use after implementation via /unit-tests, or when asked to write unit tests. Writes and runs tests in the project's existing framework; edits test files only, never source.
 model: inherit
 readonly: false
 tools: Read, Grep, Glob, Bash, Write, Edit

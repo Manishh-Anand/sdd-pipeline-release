@@ -1,7 +1,7 @@
 {
   "name": "engineering-pipeline",
-  "description": "Intent to requirements to plan to approval to build to independent validation, with unit-test generation (--ut).",
-  "version": "2.4.0",
+  "description": "Intent to requirements to plan to approval to build to independent validation, with slash commands such as /unit-tests and /review.",
+  "version": "2.5.0",
   "author": {
     "name": "Manishh-Anand"
   },

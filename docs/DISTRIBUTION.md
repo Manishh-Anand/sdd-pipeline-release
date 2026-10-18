@@ -11,13 +11,14 @@ always-on rule `pipeline-router`). `.cursor-plugin/marketplace.json` makes the r
 **Publish (owners):**
 1. Change sources, bump `VERSION`, run `node scripts/build-plugin.mjs`, open a PR (CI must pass),
    merge, tag `vX.Y.Z`.
-2. *Team/private:* in the Cursor dashboard (Settings, Plugins), add this GitHub repo as a team
-   marketplace and mark the plugin required or optional. Needs a plan with team marketplaces.
-3. *Public:* submit the repo at cursor.com/marketplace/publish (Cursor reviews it).
+2. *Team/private:* Dashboard -> Plugins & MCPs -> Team Marketplaces -> Add Marketplace -> Import from Repo
+   (needs a Teams or Enterprise plan; admins only). See the steps in the chat guide: set Marketplace Access,
+   Enable Auto Refresh, and each plugin's install mode (Default Off / Default On / Required).
+3. *Public:* submit at cursor.com/marketplace/publish. Plugins must be open source and are reviewed on every update.
 4. *Local test before either:* copy `plugin/` to `~/.cursor/plugins/local/engineering-pipeline`
    and reload the window.
 
-**Install (developers):** open Cursor's plugin marketplace, install `engineering-pipeline`, then
+**Install (developers):** open Customize in the Cursor sidebar, install `engineering-pipeline` from the team marketplace (automatic if set to Default On or Required), then
 run `/pipeline-init` once in each project. That creates `.agent/memory`, `.agent/templates` and
 `.agent/work`, which stay project-owned and are never updated by the plugin. Updates arrive with
 the plugin version; no per-repo PR.

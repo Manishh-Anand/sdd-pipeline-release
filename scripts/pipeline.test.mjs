@@ -111,13 +111,22 @@ test('--update replaces untouched files, keeps local edits, removes dropped file
   assert.ok(install(t, { update: true }).conflicts.includes('.cursor/rules/vite.mdc'));
 });
 
-test('--ut support is wired: skill, agent, command and router flag', () => {
+test('unit-test support is wired: skill, agent and command', () => {
   for (const f of ['.cursor/skills/unit-testing/SKILL.md', '.claude/agents/test-writer.md', '.cursor/commands/unit-tests.md'])
     assert.ok(fs.existsSync(path.join(ROOT, f)), f);
-  assert.match(fs.readFileSync(path.join(ROOT, 'AGENTS.md'), 'utf8'), /`--ut`/);
+  assert.match(fs.readFileSync(path.join(ROOT, 'AGENTS.md'), 'utf8'), /`\/unit-tests`/);
   const d = fixture();
   fs.rmSync(path.join(d, '.cursor/skills/unit-testing'), { recursive: true });
   expectError(d, /unit-testing: required skill missing/);
+});
+
+test('command must be named after its file and listed in AGENTS.md', () => {
+  const d = fixture();
+  edit(d, '.cursor/commands/review.md', (s) => s.replace('name: review', 'name: reviews'));
+  expectError(d, /review.md: frontmatter name/);
+  const e = fixture();
+  edit(e, 'AGENTS.md', (s) => s.replace('`/converge`', '`/c`'));
+  expectError(e, /converge.md: command is not listed/);
 });
 
 test('installer ships the commands folder', () => {

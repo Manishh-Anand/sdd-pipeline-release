@@ -92,6 +92,14 @@ export function check(root) {
     }
   }
 
+  // Commands: name matches file, description present, and every command is routed from AGENTS.md
+  for (const f of exists('.cursor/commands') ? fs.readdirSync(p('.cursor/commands')).filter((x) => x.endsWith('.md')) : []) {
+    const rel = `.cursor/commands/${f}`, name = f.replace(/\.md$/, ''), fm = frontmatter(readRel(rel));
+    if (!fm || fm.name !== name) err(rel, `frontmatter name must be "${name}"`);
+    else if (!fm.description) err(rel, 'missing description');
+    if (!agents.includes(`/${name}`)) err(rel, 'command is not listed in AGENTS.md');
+  }
+
   // Size of router and memory index
   if (agents && lines(agents).length > CAPS.agents) err('AGENTS.md', `${lines(agents).length} lines > cap ${CAPS.agents}`);
   if (exists('CLAUDE.md') && !/^@AGENTS\.md/m.test(readRel('CLAUDE.md'))) err('CLAUDE.md', 'must import @AGENTS.md (single source)');

@@ -31,7 +31,7 @@ export function build(out) {
   fs.mkdirSync(path.join(out, '.cursor-plugin'), { recursive: true });
   fs.writeFileSync(path.join(out, '.cursor-plugin/plugin.json'), JSON.stringify({
     name: PLUGIN_NAME,
-    description: 'Intent to requirements to plan to approval to build to independent validation, with unit-test generation (--ut).',
+    description: 'Intent to requirements to plan to approval to build to independent validation, with slash commands such as /unit-tests and /review.',
     version,
     author: { name: 'Manishh-Anand' },
     homepage: 'https://github.com/Manishh-Anand/sdd-pipeline-release',

@@ -36,15 +36,15 @@ If you are unsure, pick the higher class.
 ## 4. Lanes
 **Full lane** (Medium/High):
 `requirements-intake` → `codebase-audit` → `architecture-review` → plan & `tasks` → **approval** → implement →
-[`unit-testing` if `--ut`] → **review gate** → `convergence` → `documentation` → `project-memory` → final report.
+**review gate** → `convergence` → `documentation` → `project-memory` → final report.
 
 **Quick lane** (Low): `codebase-audit` (scoped to the touched files) → implement → **review gate** →
 `convergence` (scoped) → final report. Escalate to full lane as soon as change turns out not Low.
 
-**Flags** (anywhere in the prompt; strip them before classifying intent):
-- `--ut`: after implementation and before the review gate, launch the `test-writer` subagent
-  (`unit-testing` skill) with the feature id and diff base. Its tests are then covered by the
-  review gate. Standalone: `/unit-tests [paths]`.
+**Commands** (explicit entry points in `.cursor/commands/`, each runs the skill or agent it
+names): `/unit-tests`, `/review`, `/audit`, `/fix-bug`, `/document`, `/remember`, `/converge`, `/pr`, `/test-fix`.
+`/unit-tests` runs the `test-writer` subagent (`unit-testing` skill); suggest it in the final
+report when new logic has no tests.
 
 **Review gate**: launch three subagents **in parallel**, each in a fresh context, each given the
 feature id and the diff base:
@@ -115,7 +115,7 @@ Never claim done while a required check failed.
 - Codebase audited and architecture reviewed.
 - Plan and task breakdown approved with consistency check PASS.
 - Implemented within scope and all tasks executed.
-- Tests added or updated (and unit tests written when `--ut` was given).
+- Tests added or updated.
 - Typecheck, lint, build and tests pass where the project configures them.
 - `VALIDATION.md`, `REVIEW.md` and `SECURITY.md` all PASS.
 - `CONVERGENCE.md` PASS (CONVERGED).

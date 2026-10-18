@@ -10,8 +10,8 @@ intent → requirements → audit → plan → **approval** → build → **inde
 | `AGENTS.md` | Router: intent → Cursor mode → skills, risk lanes, gates |
 | `.cursor/rules/` | Coding standards (3 always on, 11 attached by file type) |
 | `.cursor/skills/` | 10 pipeline skills + 6 vetted external skills ([register](docs/EXTERNAL_SKILLS.md)) |
-| `.claude/agents/` | Review gate subagents: `validator`, `code-reviewer`, `security-auditor` (run in parallel), `test-writer` (on `--ut`) |
-| `.cursor/commands/` | `/unit-tests` |
+| `.claude/agents/` | Review gate subagents: `validator`, `code-reviewer`, `security-auditor` (run in parallel), `test-writer` (via `/unit-tests`) |
+| `.cursor/commands/` | `/unit-tests` `/review` `/audit` `/fix-bug` `/document` `/remember` `/converge` `/pr` `/test-fix` |
 | `plugin/` | Generated Cursor plugin; `.cursor-plugin/marketplace.json` makes this repo installable from a marketplace ([docs/DISTRIBUTION.md](docs/DISTRIBUTION.md)) |
 | `.agent/memory/` | Team memory (decisions, conventions, gotchas), reviewed in PRs |
 | `.agent/templates/` | Skeletons for the REQUIREMENTS / CODEBASE_CONTEXT / PLAN / VALIDATION artifacts |
@@ -20,7 +20,7 @@ intent → requirements → audit → plan → **approval** → build → **inde
 ## Use
 - **Try it in Cursor:** [docs/TESTING.md](docs/TESTING.md)
 - **Roll out to the team:** [docs/DISTRIBUTION.md](docs/DISTRIBUTION.md)
-- **Unit tests:** add `--ut` to a prompt, or run `/unit-tests [paths]`.
+- **Unit tests:** run `/unit-tests [paths]` after a build. Other entry points are listed in `.cursor/commands/`.
 - **Build the plugin after editing sources:** `node scripts/build-plugin.mjs`
 - **Install / update a project (Git method):** `node scripts/install.mjs <repo> [--update] [--dry-run]`. It never overwrites
   existing files.

@@ -1,6 +1,6 @@
 ---
 name: unit-testing
-description: Write unit tests for finished code, derived from the acceptance criteria and plan, in the project's existing test framework; run them and report. Use when the prompt carries the `--ut` flag, when asked to "write/add unit tests", or via the /unit-tests command. Runs as the test-writer subagent after implementation and before the review gate.
+description: Write unit tests for finished code, derived from the acceptance criteria and plan, in the project's existing test framework; run them and report. Use via the /unit-tests command, when asked to "write/add unit tests", Runs as the test-writer subagent after implementation.
 ---
 # Unit testing
 
@@ -9,9 +9,8 @@ Add unit tests that prove the finished behaviour. Tests come from what the code 
 (criteria, plan, contracts), not from echoing what it currently does, so they can catch bugs.
 
 ## Trigger
-- The `--ut` flag in a feature, bug or quick-lane prompt: run after implementation, before the
-  review gate.
-- A direct request, or `/unit-tests [paths]`: run against the current diff or the named paths.
+- `/unit-tests [paths]` or a direct request, after implementation: run against the current diff
+  or the named paths. Run it before the review gate when the tests should be reviewed too.
 
 Run it as the `test-writer` subagent (the `test-writer` agent) for a fresh context.
 
@@ -45,6 +44,18 @@ Run it as the `test-writer` subagent (the `test-writer` agent) for a fresh conte
    would fail if the branch were broken. Revert any throwaway edit.
 8. Write `.agent/work/<id>/UNIT_TESTS.md` when a feature folder exists: units covered, cases
    per criterion, commands run with results, defects found, and units skipped with a reason.
+
+## Repair mode (`/test-fix`)
+Same guardrails, different input: tests that already exist and fail or flake.
+1. Run the failing tests; run flaky ones repeatedly (and in isolation) to see the pattern.
+2. Classify each: **outdated** (the requirement or contract changed on purpose), **brittle**
+   (time, order, shared state, randomness, over-specified mocks) or **real defect** (the code is
+   wrong).
+3. Outdated: update the expectation to the new contract and cite where it changed. Brittle: remove
+   the cause (inject the clock, isolate state, assert behaviour instead of calls). Defect: leave
+   the test, report the defect with file:line.
+4. Re-run the repaired tests and the full suite. Never skip, delete, loosen or retry-wrap a test
+   to get green.
 
 ## Output
 New or changed test files, plus a summary (and `UNIT_TESTS.md` when a feature folder exists).
