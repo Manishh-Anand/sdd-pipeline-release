@@ -13,7 +13,6 @@ repo when they open it.
 ```
 
 1. Host this repo as `sdd-pipeline-release` (GitHub or Azure DevOps).
-   DevOps).
 2. Protect `main`: PRs only, with one approval from the pipeline owners. Add a `CODEOWNERS`
    file, e.g. `* @your-org/eng-leads`.
 3. Add CI that runs on every PR (§5).
